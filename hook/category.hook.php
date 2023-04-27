@@ -15,7 +15,7 @@ function category_path($id, $other = null)
 	pe_lead('public/class/categorytree.class.php');
 	$category = new category();
 	$pid_arr = $category->getpid_arr($category_list, $id);
-	$path = "<a href='{$pe['host_root']}'>首页</a>";
+	$path = "<a href='{$pe['host_root']}'>Mục chính</a>";
 	foreach ($pid_arr as $v) {
 		$path .= " > <a href='".pe_url("product-list-{$category_list[$v]['category_id']}")."' title='{$category_list[$v]['category_name']}'>{$category_list[$v]['category_name']}</a>";
 	}
