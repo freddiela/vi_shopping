@@ -86,7 +86,7 @@ switch ($act) {
 		}
 		$prodata_list = $db->pe_selectall('prodata', array('product_id' => $product_id, 'order by' => 'product_order asc'), 'product_guid, product_ruleid, product_money, product_mmoney, product_num');
 		foreach ($prodata_list as $k => $v) {
-			$prodata_list[$k]['product_money'] = $v['product_money'];
+			$prodata_list[$k]['product_money'] = product_money($v['product_money']);
 			//if ($info['product_money'] != $info['product_smoney']) $prorule_list[$k]['product_money'] = $info['product_money'];
 			if (!$v['product_num']) unset($prodata_list[$k]);
 		}
