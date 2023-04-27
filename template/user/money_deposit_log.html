@@ -1,0 +1,62 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+    <!--{include(pe_tpl('user_menu.html'));}-->
+    <div class="fr huiyuan_main">
+        <div class="u_index_box mat5">
+            <div class="u_index_l">
+                <div class="u_info">
+                    <div style="margin-left:0px;">
+                        <p>Thu nhập ngày hôm qua (việt nam đồng)：
+                            {$user_info['deposit_yesterday']['allAddMoney'] *1
+                            > 0 ? $user_info['deposit_yesterday']['allAddMoney'] : '0.00'}
+                        </p>
+                        <p>Tổng số dư (việt nam đồng)：
+                            {$user_info['deposit_all']['allMoney'] > 0 ?$user_info['deposit_all']['allMoney']:'0.00'}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="u_index_r">
+                <div class="u_ye_r">
+                    <a href="user.php?mod=money_deposit&act=add">Chuyển vào Yu'E Bao</a>
+                    <a href="user.php?mod=money_deposit&act=out" class="btntx">Chuyển ra khỏi Yu'E Bao</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="hy_tt" style="margin-top: 20px;">
+            <a href="{$pe['host_root']}user.php?mod=money_deposit" <!--{if($menumark=='money_deposit' ):}-->class="sel"
+                <!--{endif;}-->>Danh sách kế hoạch<i></i>
+            </a>
+            <a href="{$pe['host_root']}user.php?mod=money_deposit&state=log" <!--{if($menumark=='money_deposit_log' ):}-->class="sel"
+                <!--{endif;}-->>Bản ghi số dư<i></i>
+            </a>
+            <a href="{$pe['host_root']}user.php?mod=money_deposit&state=in" <!--{if($menumark=='money_deposit_in' ):}-->class="sel"
+                <!--{endif;}-->>Bản ghi chuyển vào<i></i>
+            </a>
+        </div>
+
+        <div class="hy_tablelist">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="130">Kế hoạch</th>
+                    <th width="150">Thời gian hoạt động</th>
+                    <th width="150">Số tiền hoạt động</th>
+                    <th width="150">Loại hình</th>
+                </tr>
+                <!--{foreach($info_list as $v):}-->
+                <tr>
+                    <td>{$v['deposit_cycle']}{$v['deposit_type'] == 'hours'? 'Giờ':
+                        ($v['deposit_type'] == 'day' ? 'Ngày':'Năm')} + {$v['deposit_rate'] *100}%</td>
+                    <td>{$v['mdl_datetime']}</td>
+                    <td>{$v['mdl_add_money']}</td>
+                    <td>{$v['mdl_add_money'] > 0 ? 'Thu nhập' : 'Chuyển ra'}</td>
+                </tr>
+                <!--{endforeach;}-->
+            </table>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

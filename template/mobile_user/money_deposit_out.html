@@ -1,0 +1,84 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="user.php?mod=money_deposit"></a></div>
+	<div>{$menutitle}</div>
+	<div class="cd"><a href="javascript:top_menu();"></a></div>
+	<!--{include(pe_tpl('top_menu.html'));}-->
+</div>
+<form method="post" id="form">
+	<div class="content">
+		<div class="zc_box2 mat10">
+
+			<div class="zc_list">
+				<div class="zc_name">Số tiền Chuyển ra</div>
+				<div class="zc_text"><input type="text" name="order_money" placeholder="Số tiền Chuyển ra" /></div>
+			</div>
+
+			<div class="zc_list">
+				<div class="zc_name">Thu nhập tiêu chuẩn </div>
+				<div class="zc_text" onclick="app_page('page_payment')" id="payment_btn"></div>
+				<i class="jt_r"></i>
+			</div>
+		</div>
+		<div class="loginbtn" style="margin:15px;">
+			<input type="hidden" name="pe_token" value="{$pe_token}" />
+			<input type="hidden" name="pesubmit" />
+			<input type="button" value="Gửi" />
+		</div>
+	</div>
+	<div id="page_payment" class="divhide">
+		<div class="add_tt">Chọn tiêu chí thu nhập</div>
+		<div class="close_btn" onclick="app_page_close();"></div>
+		<div>
+
+			<!-- <label class="add_sel js_radio" for="deposit_id_{$k}">
+				<input type="radio" name="deposit_id" value="{$v['deposit_id']}" data-name="{$v['deposit_cycle']}{$v['deposit_type'] == 'hours'? '小时':
+				($v['deposit_type'] == 'day' ? '天':'年')} + {$v['deposit_rate'] *100}%" rate="{$v['deposit_rate']}" id="deposit_id{$k}"
+					class="divhide" />
+				<span class="fl">{$v['deposit_cycle']}{$v['deposit_type'] == 'hours'? '小时':
+					($v['deposit_type'] == 'day' ? '天':'年')} + {$v['deposit_rate'] *100}%</span>
+				<div class="dui_1"></div>
+				<div class="clear"></div>
+			</label> -->
+			<!--{foreach($info_list as $k=>$v):}-->
+			<label class="add_sel js_radio" for="order_payment_{$k}">
+				<input type="radio" name="order_payment" value="{$v['mdp_id']}" payment_name="{$v['deposit_cycle']}{$v['deposit_type'] == 'hours'? '小时':
+				($v['deposit_type'] == 'day' ? 'Ngày':'Năm')} + {$v['deposit_rate'] *100}%" id="order_payment_{$k}" class="divhide" />
+				<div class="fl mar5" style="width:22px; overflow:hidden;"></div>
+				<div class="fl mat2">{$v['mdp_money']} - {$v['deposit_cycle']}{$v['deposit_type'] == 'hours'?
+					'Giờ':
+					($v['deposit_type'] == 'day' ? 'Ngày':'Năm')} + {$v['deposit_rate'] *100}% -  {$v['mdp_end_time']}</div>
+				<div class="dui_1"></div>
+				<div class="clear"></div>
+			</label>
+			<!--{endforeach;}-->
+		</div>
+	</div>
+</form>
+<script type="text/javascript" src="{$pe['host_root']}public/plugin/payment/wechat/wechat.js"></script>
+<script type="text/javascript">
+	$(function () {
+		//支付方式
+		pe_select_radio('order_payment', $(":input[name='order_payment']:eq(0)").val(), function (json) {
+			$("#payment_btn").html($(":input[name='order_payment']:checked").attr("payment_name"));
+			app_page_close();
+		});
+		$(":button").click(function () {
+			var order_payment = $(":input[name='order_payment']:checked").val();
+			var order_money = pe_num($(":input[name='order_money']").val(), 'floor', 1);
+			if (order_money < 0.1) {
+				app_tip('Chuyển khoản tối thiểu thành 1');
+				return false;
+			}
+			pe_confirm('Chuyển vào', function () {
+				layer.closeAll();
+				app_submit("{pe_nowurl()}", function (json) {
+					if (json.result) {
+						window.location.href="/user.php?mod=money_deposit";
+					}
+				})
+			});
+		})
+	})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

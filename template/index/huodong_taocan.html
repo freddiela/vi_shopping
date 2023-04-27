@@ -1,0 +1,44 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="qg_top"><p>{$menutitle}</p></div>
+<div class="content">
+	<div class="tuijian_list">
+		<!--{foreach($info_list as $k=>$v):}-->
+		<div class="prolist" <!--{if(($k+1)%4==0):}-->style="margin-right:0"<!--{endif;}-->>
+			<div class="prolist_img">
+				<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['huodong_pic'], 400, 400)}" title="{$v['huodong_desc']}" width="265px" height="265px" class="js_imgload" />
+<!--				<div class="ms_bg1"></div>-->
+			</div>
+			<p class="prolist_name">{$v['huodong_desc']}</p>
+			<div class="qg_box">
+					<span class="qg_l">
+						<span class="mar10 money4"><span class="font16">₫</span>{$v['huodong_price']}</span>
+						<s class="font12"><i>₫{$v['product_money']}</i></s>
+					</span>
+				<a href="javascript:buy_btn('buy', '{$v['huodong_id']}','{$v['product_id']}');" title="{$v['huodong_desc']}" class="qg_r">Mua</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!--{endforeach;}-->
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div class="fenye mat15">{$db->page->html}</div>
+<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	//立即购买/加入购物车按钮
+	function buy_btn(act, huodong_id, id) {
+		if ('{user_checkguest()}' == false) {
+			pe_open("{$pe['host_root']}user.php?mod=do&act=login&{pe_fromto()}");
+			return;
+		}
+		if (act == 'buy') {
+			pe_open("{$pe['host_root']}index.php?mod=order&act=add&huodong_id="+huodong_id+"&id="+id);
+		}
+	}
+</script>
+<style type="text/css">
+	.prolist{height:360px;}
+</style>
+<!--{include(pe_tpl('footer.html'));}-->

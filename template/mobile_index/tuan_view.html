@@ -1,0 +1,117 @@
+<!--{include(pe_tpl('header.html'));}-->
+<style>
+body{ background:#fff;}
+</style>
+	<!--shead  -->
+	<div class="shead">
+		<h2>Giá siêu hời, đến tham gia nhóm nào！！</h2>
+		<div class="shead-box flex">
+			<div class="shead-img"><img src="{pe_thumb($info['product_logo'])}" alt=""></div>
+			<div class="flex1 shead-info">
+				<div class="shead-name ellipsis2">{$info['product_name']}</div>
+				<div class="shead-pr flex">
+					<span class="shead-pra">₫</span>
+					<span class="shead-prb">{$info['pintuan_money']}</span>
+					<span class="shead-prc">₫{$info['product_money']}</span>
+				</div>
+				<div class="shead-foot">
+					<span class="shead-foota">Nhóm thời gian giới hạn</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- susern -->
+	<div class="susern flex-align">
+		<!--{foreach($log as $k=>$v):}-->
+		<div class="susern-li flex-align-center on">
+			<img src="{$v['user_logo'] ? $v['user_logo'] : $pe['host_tpl'].'images/user1.png'}" alt="{$v['user_name']}">
+			<!--{if($v['pintuan_leader']):}--><span class="stuan">Cái đầu</span><!--{endif;}-->
+		</div>
+		<!--{endforeach;}-->
+		<!--{for($num=1;$num<=$surplus;$num++):}-->
+		<div class="susern-li flex-align-center"><span class="wen">?</span></div>
+		<!--{endfor}-->
+	</div>
+	<!-- ssyn -->
+	<div class="ssyn">
+		<!--{if($surplus>0):}-->
+		<p>Chỉ còn <span>{$surplus}</span> người nữa, hãy nhanh tay kêu gọi bạn bè tham gia!</p>
+		<!--{elseif($surplus==0):}-->
+		Đã thành lập một nhóm
+		<!--{endif;}-->
+	</div>
+	<!-- stime -->
+	<div class="stime">
+		<div class="stime-box flex-align-center">
+			<span class="stc">Còn sót lại</span>
+			<span id="pt_etime" endtime="<!--{if($surplus>0):}-->{$info['pintuan_etime']}<!--{elseif($surplus==0):}-->{time()}<!--{endif;}-->">
+				<span class="sta jstime_h">00</span>
+				<span class="stb">:</span>
+				<span class="sta jstime_m">00</span>
+				<span class="stb">:</span>
+				<span class="sta jstime_s">00</span>
+			</span>
+			<span class="stc">Kết thúc</span>
+		</div>
+	</div>
+	<!-- suser -->
+	<!--{foreach($log as $k=>$v):}-->
+	<div class="suser bort flex-between flex-align mt20">
+		<div class="susern-li flex-align-center on">
+			<img src="{$v['user_logo'] ? $v['user_logo'] : $pe['host_tpl'].'images/user1.png'}" alt="{$v['user_name']}">
+			<!--{if($v['pintuan_leader']):}--><span class="stuan">Cái đầu</span><!--{endif;}-->
+		</div>
+		<div class="suser-name flex1">{$v['user_name'] ? $v['user_name'] : 'Người dùng ẩn danh'}</div>
+		<div class="suser-time">{pe_date($v['pintuanlog_atime'])}<!--{if($v['pintuan_leader']):}-->Bắt đầu nhóm<!--{else:}-->Tham gia vào nhóm<!--{endif;}--></div>
+	</div>
+	<!--{endforeach;}-->
+	
+	<div class="shh"></div>
+	<div class="suser borb flex-between flex-align">
+		<div class="suser-name flex1">Lưu ý khi tham gia nhóm</div>
+		<div class="suser-sm">Bạn bè tham gia nhóm, giao hàng đầy đủ, hoàn tiền nếu nhóm không thành công</div>
+	</div>
+	<div class="suser borb flex-between flex-align">
+		<div class="suser-name">Đội chơi：</div>
+		<div class="suser-sm flex1"></div>
+	</div>
+	<!-- sliuc -->
+	<div class="sliuc flex">
+		<div class="sliuc-li flex1 flex">
+			<div class="sliuc-limg"><img src="{$pe['host_tpl']}images/icon1.png" alt="Chọn sản phẩm yêu thích của bạn"></div>
+			<div class="sliuc-ltxt">Chọn sản phẩm<br>yêu thích của bạn</div>
+		</div>
+		<div class="sliuc-li flex1 flex">
+			<div class="sliuc-limg"><img src="{$pe['host_tpl']}images/icon2.png" alt="Trả tiền để bắt đầu một nhóm hoặc tham gia"></div>
+			<div class="sliuc-ltxt">Trả tiền để bắt đầu một nhóm<br>hoặc tham gia</div>
+		</div>
+		<div class="sliuc-li flex1 flex">
+			<div class="sliuc-limg"><img src="{$pe['host_tpl']}images/icon3.png" alt="Mời bạn bè tham gia nhóm để thanh toán"></div>
+			<div class="sliuc-ltxt">Mời bạn bè <br>tham gia nhóm để thanh toán</div>
+		</div>
+		<div class="sliuc-li flex1 flex">
+			<div class="sliuc-limg"><img src="{$pe['host_tpl']}images/icon4.png" alt="Đã đạt đến số người đã tham gia nhóm thành công"></div>
+			<div class="sliuc-ltxt">Số người đạt được <br> Đã tham gia nhóm thành công</div>
+		</div>
+	</div>
+	<!-- sfoot -->
+	<div class="sfooth"></div>
+	<div class="sfoot flex">
+		<div class="flex1 sfoot-li flex-align-center"><a href="{$pe['host_root']}"><span class="sfoot-la">Trang đầu</span></a></div>
+		<!--{if($info['pintuan_etime'] > time()):}-->
+			<!--{if($surplus>0):}-->
+			<div class="flex1 sfoot-li sfoot-lib flex-align-center"><a href="{$pe['host_root']}index.php?mod=product&act={$info['product_id']}&pintuan_id={$info['pintuan_id']}"><span class="sfoot-la">Tham gia vào nhóm</span></a></div>
+			<!--{else:}-->
+			<div class="flex1 sfoot-li sfoot-lib flex-align-center"><a href="{pe_url('product-'.$info['product_id'])}"><span class="sfoot-la">Bắt đầu nhóm</span></a></div>
+			<!--{endif;}-->
+		<!--{else:}-->
+		<div class="flex1 sfoot-li sfoot-lib flex-align-center"><span class="sfoot-la">kết thúc</span></div>
+		<!--{endif;}-->
+	</div>
+	<!--  -->
+	<div class="weixin_share" style="display:none;"><img src="{$pe['host_tpl']}images/weixin_share.png"></div>
+<script>
+	pe_jstime("#pt_etime", '{time()}');
+	
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

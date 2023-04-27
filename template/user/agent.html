@@ -1,0 +1,117 @@
+<!--{include(pe_tpl('agent_header.html'));}-->
+<style>
+    .input_btn {
+        padding: 6px 12px;
+        background: #fafafa;
+        color: #666;
+        border: 1px solid #d7d7d7;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    .input100 {
+        width: 100px;
+    }
+
+    .inputtext {
+        height: 20px;
+        border: 1px #ddd solid;
+        border-radius: 2px;
+        padding: 4px 8px;
+        font-size: 12px;
+        background: #fff;
+        color: #555;
+    }
+
+    .mar5 {
+        margin-right: 5px !important;
+    }
+
+    .search {
+        overflow: hidden;
+        padding: 0;
+        margin-bottom: 10px;
+        line-height: 38px;
+        text-align: right;
+    }
+
+    .tglinkinput {
+        height: 35px;
+        line-height: 35px;
+        border: 1px #ddd solid;
+        width: 620px;
+        padding: 0 10px;
+        display: inline;
+    }
+</style>
+<div style="margin-left: 180px;">
+    <!--  <div style="height: 200px;width: 100%;" class="tglink">
+        <div><input type="text"
+                value="{$pe['host_root'].'user.php?mod=do&act=register&fromto=&invite_code='.$_s_invite_code}"></div>
+    </div> -->
+    <div class="hy_tt">
+        <a href="javascript:;" class="sel">{$menutitle}<span></span><i></i></a>
+    </div>
+    <div style="background-color:white ;">
+        <div class="huiyuan_content" style="width: 95%;">
+            <div style="height: 50px; margin: 20px;padding: 20px;background-color: rgb(241, 241, 241);line-height: 50px;">
+                Liên kết khuyến mãi：<input type="text" class="tglinkinput"
+                    value="{$pe['host_root'].'user.php?mod=do&act=register&fromto=&invite_code='.$_s_invite_code}">
+            </div>
+            <div class="">
+                <div class="search">
+                    <form method="get">
+                        <input type="hidden" name="mod" value="{$_g_mod}" />
+                        <input type="hidden" name="userlevel_id" value="{$_g_userlevel_id}" />
+                        Tên người sử dùng：<input type="text" name="name" value="{$_g_name}" class="inputtext input100 mar5" />
+                        Số điện thoại：<input type="text" name="phone" value="{$_g_phone}" class="inputtext input100 mar5" />
+                        Hộp thư：<input type="text" name="email" value="{$_g_email}" class="inputtext input150" />
+
+                        <input type="submit" value="搜索" class="input_btn" />
+                    </form>
+                </div>
+                <div class="hy_tablelist">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <th width="200">Tên người sử dùng</th>
+                                <!--  <th>层级关系</th> -->
+                                <!--<th width="200">直接推荐人</th>-->
+                                <th width="200">Số dư tài khoản (Việt nam đồng)</th>
+                                <th width="200">Thời gian đăng ký</th>
+                                <th width="200">Thao tác</th>
+                            </tr>
+                            <!--{foreach($info_list as $v):}-->
+                            <tr>
+                                <td>{$v['user_name']}</td>
+                                <!--  <td>{$ini['tg_level'][$v['tguser_level']]}级好友</td> -->
+                                <td>{$v['user_money']/100}</td>
+                                <td>{pe_date_color(pe_date($v['user_atime']))}</td>
+                                <td>
+                                    <a href="user.php?mod=agent&act=agent_recharge&user_id={$v['user_id']}&{pe_fromto()}"
+                                        class="admin_edit mar3">Bản thông kê nạp tiền</a>
+                                    <a href="user.php?mod=agent&act=agent_withdrawal&user_id={$v['user_id']}&{pe_fromto()}"
+                                        class="admin_edit mar3">Bản thông kê rút tiền</a>
+                                    <a href="user.php?mod=agent&act=agent_pay&user_id={$v['user_id']}&{pe_fromto()}"
+                                        class="admin_edit mar3">Bản thông kê giao dịch</a>
+                                </td>
+                            </tr>
+                            <!--{endforeach;}-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="fenye mat10">{$db->page->html}</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+<div class="clear"></div>
+
+</div>
+
+</body>
+
+</html>

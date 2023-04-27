@@ -1,0 +1,67 @@
+<!--{include(pe_tpl('agent_header.html'));}-->
+<div style="margin-left: 180px;">
+    <div class="hy_tt">
+        <a href="javascript:;" class="sel">{$menutitle}<span></span><i></i></a>
+    </div>
+    <div style="background-color:white ;">
+        <div class="huiyuan_content" style="width: 95%;">
+            <div class="hy_tablelist">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th width="120">Ngày đăng ký</th>
+                        <th>Tài khoản nhận tiền</th>
+                        <th width="70">Người nhận tiền</th>
+                        <th width="120">Rút tiền mặt</th>
+                        <th width="120">Kết quả xử lý</th>
+                        <th width="120">Ngày xử lý</th>
+                        <th width="120">Đăng ký người dùng</th>
+                    </tr>
+                    <!--{foreach($info_list as $v):}-->
+                    <tr>
+                        <td>{pe_date($v['cashout_atime'])}</td>
+                        <td>{$v['cashout_bankname']} ({userbank_num($v['cashout_banknum'])})</td>
+                        <td>{$v['cashout_banktname']}</td>
+                        <td><span class="corg">₫ {$v['cashout_money']+$v['cashout_fee']}</span></td>
+                        <td>
+                            <!--{if($v['cashout_state']==1):}-->
+                            <span class="cgreen">Đã quyết toán</span>
+                            <!--{elseif($v['cashout_state'] == 2):}-->
+                            <del class="c999">Đã hủy bỏ</del>
+                            <!--{else:}-->
+                            <span class="cred">Đang chờ xem xét</span>
+                            <!--{endif;}-->
+                        </td>
+                        <td>
+                            <!--{if(!$v['cashout_state']):}-->
+                            Đang chờ được xử lý
+                            <!--{else:}-->
+                            {pe_date($v['cashout_ptime'])}
+                            <!--{endif;}-->
+                        </td>
+                        <td>{$v['user_name']}</td>
+                    </tr>
+                    <!--{endforeach;}-->
+                    <tr>
+                        <th width="120">Tổng</th>
+                        <th></th>
+                        <th width="70"></th>
+                        <th width="120">₫{$sum}</th>
+                        <th width="120"></th>
+                        <th width="120"></th>
+                        <th width="120"></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="fenye mat10">{$db->page->html}</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+<div class="clear"></div>
+
+</div>
+
+</body>
+
+</html>

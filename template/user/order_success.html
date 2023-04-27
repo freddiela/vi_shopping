@@ -1,0 +1,142 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+    <!--{include(pe_tpl('user_menu.html'));}-->
+    <div class="fr huiyuan_main">
+        <div class="hy_tt">
+            <a href="{$pe['host_root']}user.php?mod=order_recovery" <!--{if(!$_g_state):}-->class="sel"
+                <!--{endif;}-->> Thu hồi ghi nhớ<span>({$tongji['huishou']})</span><i></i>
+            </a>
+            <a href="{$pe['host_root']}user.php?mod=order_recovery&state=order" <!--{if($_g_state=='order'
+                ):}-->class="sel"
+                <!--{endif;}-->>Đơn hàng có thể thu hồi<i></i>
+            </a>
+            <a href="javascript:duihuan_open();" class="fabu_btn">Đăng ký thu hồi</a>
+        </div>
+        <div class="hy_tablelist">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_ordertt1"> 
+                <tr>
+                    <td width="101">Mã số đặt đơn hàng</td>
+                    <td>Thông tin sản phẩm</td>
+                    <td width="121">Thanh toán thực tế (Việt nam đồng)</td>
+                    
+                </tr>
+                <!--{foreach($info_list as $v):}-->
+                <tr>
+                    <td>{$v['order_id']}</td>
+                    <td style="text-align:left;">
+                        <!--{foreach($v['product_list'] as $kk=>$vv):}-->
+                        <div class="dingdan_list" <!--{if($kk==0):}-->style="padding-top:0;border-top:0"
+                            <!--{endif;}-->>
+                            <a href="{pe_url('product-'.$vv['product_id'])}" class="fl mar5 dingdan_img"
+                                target="_blank"><img src="{pe_thumb($vv['product_logo'], 100, 100)}" /></a>
+                            <div class="fl dingdan_name">
+                                <!--{if($v['order_type']=='pintuan'):}--><span class="tag_pintuan">Tham gia nhóm</span>
+                                <!--{endif;}-->
+                                <a href="{pe_url('product-'.$vv['product_id'])}" target="_blank"
+                                    class="dd_name">{$vv['product_name']}</a>
+                                
+                            </div>
+                            <div class="fl dingdan_jg">₫{$vv['product_money']} <span
+                                    class="mat5 c888 font12">×{$vv['product_num']}</span></div>
+                           
+                            <div class="clear"></div>
+                        </div>
+                        <!--{endforeach;}-->
+                    </td>
+                    <td width="120">
+                        <p class="corg font14 strong">{$v['order_money']}</p>
+                        <p class="c999">（Bao gồm phí vận chuyển：{$v['order_wl_money']}）</p>
+                        <p class="c999">{$v['order_payment_name']}</p>
+                    </td>
+                   
+                </tr>
+                <!--{endforeach;}-->
+            </table>
+        </div>
+        <div class="fenye mat10">{$db->page->html}</div>
+    </div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->
+<script type="text/html" id="huishou_tianjia_html">
+<form method="post" id="form" class="order_recovery_add">
+    <div class="content">
+        <table>
+            <tr>
+                <td align="right">Tên người sử dùng：</td>
+                <td><input readonly="readonly" type="text" name="info[user_name]" value="" class="inputall input250 name" placeholder="Tên người sử dùng" /></td>
+            </tr>
+            <tr>
+                <td align="right">Họ tên：</td>
+                <td><input readonly="readonly" type="text" name="info[user_tname]" value="" class="inputall input250 tname" placeholder="Họ tên" /></td>
+            </tr>
+            <tr>
+                <td align="right">Mã số đơn đặt hàng：</td>
+                <td><input oninput="getOrder(this)" type="text" name="info[order_id]" value="" class="inputall input250 orderid" placeholder="Mã số đơn đặt hàng" /></td>
+            </tr>
+            <tr>
+                <td align="right">Giá sản phẩm：</td>
+                <td><input readonly="readonly" type="text" name="info[amount]" value="" class="inputall input250 amount" placeholder="Giá sản phẩm" /></td>
+            </tr>
+        </table>
+    </div>
+    <div style="text-align:center">
+        <div class="quan_dh" style="margin-top:0;">
+            <input type="hidden" name="pesubmit" />
+            <input class="submit" type="button" value="Đăng ký thu hồi" onclick="huishou_btn()" />
+        </div>
+    </div>
+</form>
+</script>
+<script type="text/javascript">
+    function duihuan_open() {
+        layer.open({
+            type: 1,
+            title: 'Thu hồi đơn đặt hàng',
+            area: ['500px', '350px'],
+            fixed: false,
+            shadeClose: true,
+            shade: 0.5,
+            content: $("#huishou_tianjia_html").html()
+        });
+    }
+    function huishou_btn() {
+        pe_submit("user.php?mod=order_recovery&act=add", function (json) {
+            if (json.result) {
+                pe_open('reload', 1000);
+            }
+        });
+    }
+    function getOrder(target) {
+        $('.submit').attr('disabled', true);
+        $('.name').val('');
+        $('.tname').val('');
+        $('.amount').val('');
+        var val = target.value.trim();
+        if (val && val.length == 15) {
+            $.ajax({
+                url: '/user.php?mod=order_recovery&act=validate',
+                data: {
+                    id: val
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res && res.code == 200) {
+                        $('.name').val(res.data.user_name);
+                        $('.tname').val(res.data.user_tname);
+                        $('.amount').val(res.data.money);
+                        $('.submit').attr('disabled', false);
+                    } else if (res) {
+                        if (res.msg) {
+                            pe_tip(res.msg);
+                        }
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        } else {
+
+        }
+    }
+</script>

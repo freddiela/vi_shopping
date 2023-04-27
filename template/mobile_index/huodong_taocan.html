@@ -1,0 +1,37 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="tao_top"></div>
+<div class="content" style="margin-bottom:60px;">
+	<div class="tuijian_list mat10">
+		<ul>
+			<!--{foreach($info_list as $k=>$v):}-->
+			<li>
+				<div class="li_box">
+						<div class="prolist_logo">
+							<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['huodong_pic'], 400, 400)}" title="{$v['huodong_desc']}" class="js_imgload" />
+						</div>
+					<div class="prolist_name">
+						<p>{$v['huodong_desc']}</p>
+						<span>₫{$v['huodong_price']}</span>
+						<div class="prolist_pt"><a href="javascript:buy_btn('buy', '{$v['huodong_id']}','{$v['product_id']}');" title="{$v['huodong_desc']}" class="qg_r">Mua</a></div>
+					</div>
+				</div>
+			</li>
+			<!--{endforeach;}-->
+		</ul>
+		<div class="clear"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	//立即购买/加入购物车按钮
+	function buy_btn(act, huodong_id, id) {
+		if ('{user_checkguest()}' == false) {
+			pe_open("{$pe['host_root']}user.php?mod=do&act=login&{pe_fromto()}");
+			return;
+		}
+		if (act == 'buy') {
+			pe_open("{$pe['host_root']}index.php?mod=order&act=add&huodong_id="+huodong_id+"&id="+id);
+		}
+	}
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

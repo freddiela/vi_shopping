@@ -1,0 +1,78 @@
+<!--{include(pe_tpl('header.html'));}-->
+<style>
+    .side_fh1 {
+        background: #fff;
+        height: auto;
+        font-family: "微软雅黑";
+        padding: 0 0 0 10px;
+        border: 0px;
+        text-align: center;
+    }
+</style>
+<div class="pagetop">
+    <div class="fh"><a href="user.php"></a></div>
+    <div>{$menutitle}</div>
+    <div class="cd"><a href="javascript:top_menu();"></a></div>
+    <!--{include(pe_tpl('top_menu.html'));}-->
+</div>
+<div style="height: 100%;width: 100%;background-color: #f3f3f3;">
+    <div style="background-color: rgb(245, 116, 65);height: 200px;width: 100%;">
+
+    </div>
+    <div
+        style="margin: 15px;background-color: white;height: 290px;border-radius: 5px;position: relative;top: -200px;text-align: center;">
+        <div style="padding-top: 40px;color: #868383;">
+            Tổng
+        </div>
+        <div style="padding-top: 10px;font-size: 30px;font-weight: 600;">
+            {$user_info['deposit_all']['allMoney'] > 0 ?$user_info['deposit_all']['allMoney']:'0.00'}
+        </div>
+        <div class="side_fh1">
+            <a style="width: 50%;" href="#">Thu nhập ngày hôm qua <span>
+                    {$user_info['deposit_yesterday']['allAddMoney'] *1
+                    > 0 ? $user_info['deposit_yesterday']['allAddMoney'] : '0.00'} </span></a>
+            <a style="width: 50%;" href="#">Tổng thu nhập tích lũy<span> {$user_info['deposit_add']['allAddMoney'] *1
+                    > 0 ? $user_info['deposit_add']['allAddMoney'] : '0.00'} </span></a>
+        </div>
+        <div class="side_fh1" style="padding:0 20px">
+            <a style="width: 50%;" href="user.php?mod=money_deposit&act=out"><span
+                    style="padding: 10px 20px;background-color: rgb(248, 210, 195);border-radius: 5px;width: 70%;color: rgb(245, 116, 65);">Chuyển ra</span></a>
+            <a style="width: 50%;" href="user.php?mod=money_deposit&act=in"><span
+                    style="padding: 10px 20px;background-color: rgb(245, 116, 65);border-radius: 5px;width: 70%;color: #fff;">Chuyển vào</span></a>
+        </div>
+        <div class="main" style="margin-top: 190px;text-align: left;">
+            <div class="tx_tt" style="border-top-left-radius: 5px;border-top-right-radius: 5px;"><i></i>Bản ghi số dư</div>
+            <!--{if(!count($info_list)):}-->
+            <div class="nodata">
+                <div class="nodata_img"></div>
+                <div class="nodata_tip">Không có thông tin</div>
+            </div>
+            <!--{endif;}-->
+            <div class="jf_box" style="margin-top:0;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
+                <!--{foreach($info_list as $k=>$v):}-->
+                <div class="jf_list">
+                    <div class="jifen_l">
+                        <p>{$v['deposit_cycle']}{$v['deposit_type'] == 'hours'? 'Giờ':
+                            ($v['deposit_type'] == 'day' ? 'Ngày':'Năm')} + {$v['deposit_rate'] *100}%</p>
+                        <span class="c888">{$v['mdl_datetime']}</span>
+                    </div>
+                    <div class="jifen_r" style="width: 130px;">
+                       <span style="margin-right: 10px;"> {$v['mdl_add_money']}</span>
+                        <!--{if($v['type'] == 1):}-->
+                       <span style="color: #ea0813"> chuyển vào</span>
+                        <!--{elseif($v['mdl_add_money'] > 0):}-->
+                       <span style="color: #ea0813"> Thu nhập</span>
+                        <!--{else:}-->
+                       <span style="color: #1fde6b"> Chuyển ra</span>
+                        <!--{endif;}-->
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!--{endforeach;}-->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--{include(pe_tpl('footer.html'));}-->

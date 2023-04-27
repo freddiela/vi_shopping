@@ -1,0 +1,50 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span></span><i></i></a>
+		</div>
+		<div class="tglink" style="position:relative">
+		    <p class="mab10" style="width: 650px">
+		    Sao chép liên kết dưới đây và gửi cho bạn của bạn，
+		<!--{foreach(array(1,2,3) as $v):}-->
+		 Mức tiêu thụ cấp của người hâm mộ {$v} của bạn, bạn sẽ nhận được {$cache_setting['tg_fc'.$v]*100}% hoa hồng
+		
+		<!--{endforeach;}-->Hãy nhanh lên nào o(∩_∩)o 
+		</p>
+			<div class="mat20"><input type="text" value="{$pe['host_root'].'user.php?mod=do&act=register&fromto=&invite_code='.$_s_invite_code}"></div>
+			<div class="clear"></div>
+			<div class="tg_ewm">
+				<img src="{user_qrcode($pe['host_root'].'user.php?mod=do&act=register&fromto=&invite_code='.$_s_invite_code)}">
+				<p>Mời gọi bằng mã QR</p>
+			</div>
+		</div>
+		<div class="hy_tt" style="margin-top:50px;">
+			<a href="user.php?mod=tg" class="sel">Bạn tốt của tôi<span>(0)</span><i></i></a>
+		</div>
+        	<div class="hy_tablelist">
+        			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        			<tbody><tr>
+        				<th width="200">Tên người sử dùng</th>
+        				<th>Quan hệ cấp bậc </th>
+        				<!--<th width="200">直接推荐人</th>-->
+        				<th width="200">Mức tiêu thụ tổng(Việt nam đồng)</th>
+        				<th width="200">Thời gian đăng ký</th>
+        			</tr>
+        				<!--{foreach($info_list as $v):}-->
+						<tr>
+        				<td>{$v['user_name']}</td>
+        				<td>{$ini['tg_level'][$v['tguser_level']]}Thứ bậc Bạn bè</td>
+        				<td>{$v['money_cost']['0']['user_money_cost']}</td>		
+        				<td>{pe_date_color(pe_date($v['user_atime']))}</td>
+        			</tr>
+			        <!--{endforeach;}-->
+        						</tbody></table>
+        		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

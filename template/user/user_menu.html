@@ -1,0 +1,37 @@
+<div class="huiyuan_left">
+	<a href="user.php"><h3 class="hy_tb6"><s></s>个人中心</h3></a>
+	<h3 class="hy_tb2"><s></s>Quản lý giao dịch</h3>
+	<ul>
+		<li><a href="user.php?mod=order" <!--{if($menumark=='order'):}-->class="sel"<!--{endif;}-->>Đơn hàng của tôi</a></li>
+		<li><a href="user.php?mod=comment" <!--{if($menumark=='comment'):}-->class="sel"<!--{endif;}-->>Bình luận của tôi</a></li>
+		<li><a href="user.php?mod=collect" <!--{if($menumark=='collect'):}-->class="sel"<!--{endif;}-->>Bộ sưu tập của tôi</a></li>
+		<li><a href="user.php?mod=refund" <!--{if($menumark=='refund'):}-->class="sel"<!--{endif;}-->>Yêu cầu hoàn tiền / trả hàng </a></li>
+		<li><a href="user.php?mod=order_recovery" <!--{if($menumark=='order_recovery'):}-->class="sel"<!--{endif;}-->>Trung tâm thu hồi</a></li>
+	</ul>
+	<div class="xuxian"></div>
+	<h3 class="hy_tb4"><s></s>Trung tâm tài chính</h3>
+	<ul>
+    	<li><a href="user.php?mod=quan" <!--{if($menumark=='quan'):}-->class="sel"<!--{endif;}-->>Phiếu giảm giá của tôi</a></li>
+		<li><a href="user.php?mod=moneylog" <!--{if($menumark=='moneylog'):}-->class="sel"<!--{endif;}-->>Chi tiết tiền quỹ  </a></li>
+		<li><a href="user.php?mod=pointlog" <!--{if($menumark=='pointlog'):}-->class="sel"<!--{endif;}-->>Chi tiết tích điểm</a></li>
+		<li><a href="user.php?mod=pay" <!--{if(in_array($mod, array('pay', 'cashout'))):}-->class="sel"<!--{endif;}-->>Nạp tiền / Rút tiền</a></li>
+	</ul>
+	<div class="xuxian"></div>
+	<h3 class="hy_tb3"><s></s>Thiết lập người dùng</h3>
+	<ul>
+		<li><a href="user.php?mod=setting&act=base" <!--{if($menumark=='setting_base'):}-->class="sel"<!--{endif;}-->>Thông tin cá nhân</a></li>
+		<li><a href="user.php?mod=setting&act=pw" <!--{if($menumark=='setting_pw'):}-->class="sel"<!--{endif;}-->>Thay đổi mật khẩu</a></li>
+		<li><a href="user.php?mod=userbank" <!--{if($menumark=='userbank'):}-->class="sel"<!--{endif;}-->>Tài khoản nhận tiền</a></li>
+		<li><a href="user.php?mod=useraddr" <!--{if($menumark=='useraddr'):}-->class="sel"<!--{endif;}-->>Địa chỉ nhận hàng</a></li>
+	</ul>
+
+	<!--{if($cache_setting['tg_state']):}-->
+	<div class="xuxian"></div>
+	<h3 class="hy_tb5"><s></s>Trung tâm mời gọi</h3>
+	<ul>
+		<li><a href="user.php?mod=tg" <!--{if($menumark=='tg_index'):}-->class="sel"<!--{endif;}-->>Mời bạn bè</a></li>
+		<li style="padding-bottom:20px"><a href="user.php?mod=tg&act=list" <!--{if($menumark=='tg_list'):}-->class="sel"<!--{endif;}-->>Thu nhập của tôi</a></li>
+	</ul>
+	<!--{endif;}-->
+
+</div>

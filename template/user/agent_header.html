@@ -1,0 +1,68 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hậu trường đại lý</title>
+    <meta name="viewport" content="width=1200" />
+    <meta name="keywords" content="{$seo['keywords']}" />
+    <meta name="description" content="{$seo['description']}" />
+    <meta name="viewport" content="width=1200" />
+    <link rel="shortcut icon" type="image/ico" href="{$pe['host_root']}favicon.ico">
+    <link type="text/css" rel="stylesheet" href="{$pe['host_tpl']}css/style.css" />
+    <script type="text/javascript" src="{$pe['host_root']}public/js/jquery.js"></script>
+    <script type="text/javascript" src="{$pe['host_root']}public/js/global.js"></script>
+    <script type="text/javascript" src="{$pe['host_root']}public/plugin/layer/layer.js"></script>
+</head>
+
+<body style="height: 100%;">
+    <!--{if($mod!='sign'):}-->
+    <div style="background:#E45050; padding-bottom:20px; position:relative">
+        <div class="">
+            <div class="fl logo">
+                <a href="#">Hậu trường đại lý</a>
+            </div>
+            <div class="user_nav">
+            </div>
+            <div class="sear fr">
+                <form method="get" action="{$pe['host_root']}index.php">
+                    <input type="hidden" name="mod" value="product" />
+                    <input type="hidden" name="act" value="list" />
+                    <div class="inputbg fr">
+                        <!--{if(pe_login('user')):}-->
+                        <a href="{$pe['host_root']}user.php"
+                            style="color:#ffffff;padding:0;border:0">{$_s_user_name}</a>
+                        <a href="{$pe['host_root']}user.php?mod=do&act=logout" title="Đăng xuất"
+                            style="padding-left:20px;color:#ffffff">[Đăng xuất]</a>
+
+                        <!--{endif;}-->
+                    </div>
+                </form>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--{endif;}-->
+    <div style="height: 100%;">
+        <div class="huiyuan_left" style="height: 100%;">
+            <a href="#">
+                <h3 class="hy_tb6"><s></s>Trung tâm đại lý</h3>
+            </a>
+            <h3 class="hy_tb2"><s></s>Quản lý hội viên</h3>
+            <ul>
+                <li><a href="user.php?mod=agent&act=user" <!--{if($menumark=='agent' ):}-->class="sel"
+                        <!--{endif;}-->>Danh sách hội viên
+                    </a></li>
+                <li><a href="user.php?mod=agent&act=agent_recharge" <!--{if($menumark=='agent_recharge' ):}-->class="sel"
+                        <!--{endif;}-->>Bản thông kê nạp tiền
+                    </a></li>
+                <li><a href="user.php?mod=agent&act=agent_withdrawal" <!--{if($menumark=='agent_withdrawal' ):}-->class="sel"
+                        <!--{endif;}-->>Bản thông kê rút tiền
+                    </a></li>
+                <li><a href="user.php?mod=agent&act=agent_pay" <!--{if($menumark=='agent_pay' ):}-->class="sel"
+                        <!--{endif;}-->>Bản thông kê giao dịch
+                    </a></li>
+            </ul>
+        </div>

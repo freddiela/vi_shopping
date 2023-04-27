@@ -1,0 +1,67 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="qg_top">
+	<p>{$menutitle}</p>
+</div>
+<div class="content">
+	<div class="tuijian_list">
+		<!--{foreach($info_list as $k=>$v):}-->
+		<div class="prolist" <!--{if(($k+1)%4==0):}-->style="margin-right:0"
+			<!--{endif;}-->>
+			<!--{if($v['huodong_stime'] <= time() && $v['isUser'] == 1):}-->
+			<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank">
+				<!--{else:}-->
+				<a title="{$v['product_name']}">
+					<!--{endif;}-->
+					<div class="prolist_img">
+						<img src="{$pe['host_tpl']}images/pixel.gif" data-url="{pe_thumb($v['product_logo'], 400, 400)}"
+							title="{$v['product_name']}" width="265px" height="265px" class="js_imgload" />
+						<div class="ms_time">
+							<!--{if($v['huodong_stime'] >= time()):}-->
+							<span class="timer-text" data-i18n-text="距活动开始">距活动开始</span>
+							<span class="huodong_time" endtime="{$v['huodong_stime']}"></span>
+							<input class="refresh_etime" type="hidden" value="{$v['huodong_etime']}" />
+							<!--{else:}-->
+							Còn lại <span class="huodong_time" endtime="{$v['huodong_etime']}"></span>
+							<!--{endif;}-->
+						</div>
+						<div class="ms_bg1 <!--{if($v['huodong_stime'] >= time()):}-->redbg<!--{endif;}-->"></div>
+					</div>
+					<p class="prolist_name">{$v['product_name']}</p>
+				</a>
+				<div class="qg_box">
+					<span class="qg_l">
+						<span class="mar10 money4"><span
+								class="font16">₫</span>{product_money($v['product_money'])}</span>
+						<s class="font12"><i>₫{product_money($v['product_smoney'])}</i></s>
+					</span>
+					<!--{if($v['huodong_stime'] >= time()):}-->
+					<a title="{$v['product_name']}" class="qg_r" style="background-color: #a8a0a0;" data-i18n-text="等待开始">等待开始</a>
+					<!--{else:}-->
+					<!--{if($v['isUser'] == 1):}-->
+					<a href="{pe_url('product-'.$v['product_id'])}" title="{$v['product_name']}" target="_blank"
+						class="qg_r" data-i18n-text="立即抢购">立即抢购</a>
+					<!--{else:}-->
+					<a title="{$v['product_name']}" class="qg_r" style="background-color: #a8a0a0;" data-i18n-text="无参加资格">无参加资格</a>
+					<!--{endif;}-->
+					<!--{endif;}-->
+					<div class="clear"></div>
+				</div>
+		</div>
+		<!--{endforeach;}-->
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	<div class="fenye mat15">{$db->page->html}</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	$(function () {
+		pe_jstime(".huodong_time", '{time()}', 'html', '.prolist', '.ms_bg1');
+	})
+</script>
+<style type="text/css">
+	.prolist {
+		height: 360px;
+	}
+</style>
+<!--{include(pe_tpl('footer.html'));}-->

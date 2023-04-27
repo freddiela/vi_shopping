@@ -1,0 +1,170 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="user.php?mod=order"></a></div>
+	<div>{$menutitle}</div>
+	<div class="cd"><a href="javascript:top_menu();"></a></div>
+	<!--{include(pe_tpl('top_menu.html'));}-->
+</div>
+<div class="zt_box">
+	<!--{if($recovery):}-->
+	<p>{$recovery['status'] == 0 ? 'Đang thu hồi' : ($recovery['status']  == 1 ? 'Thu hồi thất bại' : 'Đã được rút lại')}</p>
+	<!--{else:}-->
+	<p>{order_stateshow($info['order_state'], 'text')}</p>
+	<!--{endif;}-->
+	<!--{if($info['order_state']=='close'):}-->
+	<div class="font12">Hướng dẫn đóng lại：{$info['order_closetext']}</div>
+	<!--{endif;}-->
+	<i></i>
+</div>
+<!--{if(!$info['order_virtual']):}-->
+<div class="dd_zt">
+	<div class="dd_fh">
+		<i class="dd_ico1"></i>
+		<!--{if($info['order_wl_name']):}-->
+		<a href="{pe_url('order-kuaidi', 'id='.$info['order_wl_id'])}">
+			<div class="dd_fh_text"><p>{$info['order_wl_name']}</p><p class="c888">{$info['order_wl_id']}</p></div>
+			<i class="jt_r"></i>
+		</a>
+		<!--{else:}-->
+		<div class="dd_fh_text">Không có thông tin chuyển phát nhanh</div>
+		<!--{endif}-->
+	</div>
+	<div class="dd_fh dd_sh">
+		<i class="dd_ico2"></i>
+		<div class="dd_fh_text" style="margin-right:0">
+			<div>
+				<span class="fl">Người nhận hàng：{$info['user_tname']}</span>
+				<span class="fr">{userbank_num($info['user_phone'])}</span>
+				<div class="clear"></div>
+			</div>
+			<div>Địa chỉ nhận hàng：{$info['user_address']}</div>
+		</div>
+	</div>
+</div>
+<!--{endif;}-->
+<div class="main" style="margin-top:0; margin-bottom:55px;">
+	<!--{if(count($prokey_list)):}-->
+	<div class="dingdan_tt3"><span>Thông tin mật mã thẻ</span></div>
+	<div class="xh_info">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="33.3%" style="background:#F8F8F8"><strong>Mã thẻ</strong></th>
+				<th width="33.3%" style="background:#F8F8F8"><strong>Mật mã</strong></th>
+				<th width="33.3%" style="background:#F8F8F8"><strong>Có hiệu lực đến ngày</strong></th>
+			</tr>
+			<!--{foreach($prokey_list as $k=>$v):}-->
+			<tr>
+				<td>{$v['prokey_user']}</td>
+				<td>{$v['prokey_pw']}</td>
+				<td>{$v['prokey_edate']}</td>
+			</tr>
+			<!--{endforeach;}-->
+		</table>
+	</div>
+	<!--{endif;}-->
+	<div class="dingdan_tt3"><span>Danh sách hàng hóa</span></div>
+	<!--{foreach($product_list as $k=>$v):}-->
+	<div class="order_a">
+		<div class="dingdan_img"><a href="{pe_url('product-'.$v['product_id'])}"><img src="{pe_thumb($v['product_logo'], 100, 100)}" /></a></div>
+		<div class="dingdan_name">
+			<p style="height:40px; overflow:hidden;">
+				<!--{if($info['order_type']=='pintuan'):}--><span class="tag_pintuan">Tham gia vào một nhóm</span><!--{endif;}-->
+				<a href="{pe_url('product-'.$v['product_id'])}">{$v['product_name']}</a>
+			</p>
+			<p class="c888 font12">{order_skushow($v['product_rule'])}</p>
+		</div>
+		<div class="dingdan_jg">
+			<p>₫{$v['product_money']}</p>
+			<p class="c999 font12">×{$v['product_num']}</p>
+		</div>
+		<div class="clear"></div>
+		<div class="tk_box">
+			<!--{if($v['refund_id']):}-->
+			<a class="tag_org" href="user.php?mod=refund&act=view&id={$v['refund_id']}">{refund_stateshow($v['refund_state'], 'text')}</a>
+			<!--{elseif(in_array($info['order_state'], array('wsend', 'wget'))):}-->
+			<a class="tk_btn1" href="javascript:app_iframe('user.php?mod=refund&act=add&id={$v['orderdata_id']}');">Hoàn tiền / trả hàng</a>
+			<!--{endif;}-->
+		</div>	
+		<!--<td style="border-left:0;width:80px">-->
+			<!--{if($v['refund_id']):}-->
+		<!--	<a href="user.php?mod=refund&act=view&id={$v['refund_id']}" target="_blank">{refund_stateshow($v['refund_state'])}</a>-->
+			<!--{elseif(in_array($info['order_state'], array('wsend', 'wget'))):}-->
+		<!--	<a href="user.php?mod=refund&act=add&id={$v['orderdata_id']}" onclick="return pe_dialog(this, '申请退款/退货', 600, 400)">退款/退货</a>			-->
+			<!--{endif;}-->
+		<!--</td>-->
+		<div class="clear"></div>
+	</div>
+	<div class="xuxian2"></div>
+	<!--{endforeach;}-->
+	<div class="dingdan_info">
+		<div class="order_xq">
+			<span class="fl c999">Số tiền sản phẩm</span><span class="fr">₫ {$info['order_product_money']}</span>
+			<div class="clear"></div>
+			<span class="fl c999">Phí vận chuyển</span><span class="fr">₫ {$info['order_wl_money']}</span>
+			<div class="clear"></div>
+			<!--{if($info['order_quan_money']>0):}-->
+			<span class="fl c999">Khuyến mãi cửa hàng</span><span class="fr">- ₫ {$info['order_quan_money']}</span>
+			<div class="clear"></div>
+			<!--{endif;}-->
+			<!--{if($info['order_point_money']>0):}-->
+			<span class="fl c999">Khấu trừ tích điểm </span><span class="fr">- ₫ {$info['order_point_money']}</span>
+			<div class="clear"></div>
+			<!--{endif;}-->
+			<span class="fl c999">Số tiền thực chi trả</span><span class="fr font16 cred">₫ {$info['order_money']}</span>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="dingdan_tt3"><span>Thông tin đơn đặt hàng</span></div>
+	<div class="dingdan_info">
+		<div style="display: flex;align-items: center;justify-content: space-between;">
+			<div><span class="c999">Mã số đơn đặt hàng：</span>{$info['order_id']}</div>
+			<span style="display: inline-block;width: initial;padding: 0 15px;" class="tk_btn1" onclick="copyOrderId({$info['order_id']})">复制</span>
+		</div>
+		<div><span class="c999">Thời gian đặt hàng：</span>{pe_date($info['order_atime'])}</div>
+		<div><span class="c999">Thời gian thanh toán：</span><!--{if($info['order_ptime']):}-->{pe_date($info['order_ptime'])}<!--{else:}-->--<!--{endif;}--></div>
+		<div><span class="c999">Thời gian giao hàng：</span><!--{if($info['order_stime']):}-->{pe_date($info['order_stime'])}<!--{else:}-->--<!--{endif;}--></div>
+		<div><span class="c999">Phương thức thanh toán：</span>{$info['order_payment_name']}</div>
+		<!--{if($info['order_point_get']):}-->
+		<div><span class="c999">Nhận được tích điểm：</span>{$info['order_point_get']} Tích điểm</div>
+		<!--{endif;}-->
+		<div><span class="c999">Tin nhắn người mua：</span>{$info['order_text']}</div>
+	</div>
+</div>
+<div class="zt_bot">
+	<div style="padding:0 10px;">
+		<!--{if($info['order_state']=='wpay'):}-->
+		<a class="tag_org mal10" href="index.php?mod=order&act=pay&id={$info['order_id']}">Thanh toán ngay lập tức</a>
+		<a class="tag_gray mal10" href="javascript:app_iframe('user.php?mod=order&act=close&id={$info['order_id']}');">Hủy đơn hàng</a>
+		<!--{elseif($info['order_state'] == 'wget' && $info['order_payment'] != 'cod'):}-->
+		<a class="tag_org mal10" href="javascript:app_confirm('已收到商品', 'user.php?mod=order&act=success&id={$info['order_id']}&token={$pe_token}');">Xác nhận việc nhận hàng</a>
+		<!--{elseif($info['order_state'] == 'success' && !$info['order_comment']):}-->
+		<a class="tag_org mal10" href="user.php?mod=order&act=comment&id={$info['order_id']}&{pe_fromto()}">Bình luận</a>
+		<!--{endif;}-->
+		<!--{if($info['pintuan_id'] && $info['order_pstate']):}-->
+		<a class="tag_gray mal10" href="{$pe['host_root']}index.php?mod=order&act=pintuan&id={$info['pintuan_id']}">Tham gia chi tiết</a>
+		<a class="tag_gray mal10" href="{$pe['host_root']}index.php?mod=product&act={$product_list[0]['product_id']}&pintuan_id={$info['pintuan_id']}">Mời bạn bè</a>
+		<!--{endif;}-->
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		if ($(".zt_bot a").length == 0) {
+			$(".zt_bot").remove();
+			$(".main").css("margin-bottom", "10px");
+		}
+	})
+	function copyOrderId(id) {
+		var input = document.createElement('input');
+		input.value = id;
+		document.body.appendChild(input);
+		input.select();
+		document.execCommand("Copy");
+		input.remove();
+		app_tip('Sao chép thành công');
+	}
+</script>
+<style type="text/css">
+	body{background:#e8e8ed}
+</style>
+<!--{include(pe_tpl('footer.html'));}-->

@@ -1,0 +1,84 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+	<div class="order_view_tt mat10">Tin nhắn hoàn tiền</div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="order_view mat10">
+	<tr>
+		<td align="right" class="c888" width="80">Mã số đơn đặt hàng：</td>
+		<td>{$info['order_id']}</td>
+	</tr>
+	<tr>
+		<td align="right" class="c888">Mã số hoàn tiền：</td>
+		<td>{$info['refund_id']}</td>
+	</tr>
+	<tr>
+		<td align="right" class="c888">Hình thức hoàn tiền：</td>
+		<td>{$ini['refund_type'][$info['refund_type']]}</td>
+	</tr>
+	<tr>
+		<td align="right" class="c888">Số tiền hoàn trả：</td>
+		<td>₫ {$info['refund_money']}<span class="c999 mal5">（Bao gồm phí vận chuyển {$info['refund_wl_money']} Việt nam đồng）</span></td>
+	</tr>
+	<tr>
+		<td align="right" class="c888">Tình trạng hiện tại：</td>
+		<td>
+			<span class="mar20">{refund_stateshow($info['refund_state'])}</span>
+			<!--{if(in_array($info['refund_state'], array('wcheck', 'refuse'))):}-->
+			<a class="tag_org mar10" href="user.php?mod=refund&act=edit&id={$info['refund_id']}" onclick="return pe_dialog(this, 'Sửa đổi hoàn tiền/ Đăng ký hoàn trả hàng', 600, 400)">Đăng ký sửa đổi</a>
+			<a class="tag_gray mar10" href="javascript:pe_confirm('Hủy đăng ký hoàn trả hàng', 'user.php?mod=refund&act=close&id={$info['refund_id']}&token={$pe_token}');">Hủy đăng ký</a>
+			<!--{elseif($info['refund_state'] == 'wsend'):}-->
+			<a class="tag_blue mar10" href="user.php?mod=refund&act=send&id={$info['refund_id']}" onclick="return pe_dialog(this, 'Điền vào đơn hoàn trả hàng', 600, 400)">Điền mã số đơn hàng</a>
+			<a class="tag_gray mar10" href="javascript:pe_confirm('Hủy đăng ký hoàn trả hàng', 'user.php?mod=refund&act=close&id={$info['refund_id']}&token={$pe_token}');">Hủy đăng ký</a>
+			<!--{endif;}-->
+		</td>
+	</tr>
+	</table>
+	<!--{if($info['refund_type'] == 2 && $info['refund_address']):}-->
+	<div class="shixian mat20"></div>
+	<div class="order_view_tt mat20">Tin nhắn hoàn trả hàng</div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="order_view mat10">
+	<tr>
+		<td align="right" width="80">Địa chỉ trả hàng：</td>
+		<td>{$info['refund_tname']}，{$info['refund_phone']}，{$info['refund_address']}</td>
+	</tr>
+	<tr>
+		<td align="right">Hậu cần hoàn trả hàng：</td>
+		<td><!--{if($info['refund_wl_name']):}--><a href="{pe_url('order-kuaidi', 'id='.$info['refund_wl_id'])}" target="_blank" class="tag_kd">{$info['refund_wl_name']}：{$info['refund_wl_id']}</a><!--{else:}-->--<!--{endif;}--></td>
+	</tr>		
+	</table>
+	<!--{endif;}-->
+	<div class="shixian mat20"></div>
+	<div class="order_view_tt mat20">Thông tin sản phẩm</div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="order_view_list mat20">
+	<tr>
+		<td class="bgtt1" colspan="2">Tên sản phẩm</td>
+		<td class="bgtt1" width="100">Đơn giá</td>
+		<td class="bgtt1" width="100">Số lượng</td>
+		<td class="bgtt1" width="150">Chiết khấu sản phẩm</td>
+		<td class="bgtt1" width="100">Tổng</td>			
+	</tr>
+	<tr>
+		<td style="border-right:0;width:60px"><a href="{pe_url('product-'.$info['product_id'])}" class="dingdan_img"><img src="{pe_thumb($info['product_logo'], 100, 100)}"></a></td>
+		<td style="border-left:0;text-align:left;">
+			<a href="{pe_url('product-'.$info['product_id'])}" target="_blank" class="dd_name">{$info['product_name']}</a>
+			<p class="c888 mat5">{order_skushow($info['product_rule'])}</p>
+		</td>
+		<td><span class="font13">₫{$info['product_money']}</span></td>
+		<td><span class="font13">{$info['product_num']}</span></td>
+		<td>{order_jjmoney_show($v['product_jjmoney'])}</td>
+		<td><span class="font13">₫{$info['product_allmoney']}</span></td>
+	</tr>
+	</table>
+	<div class="order_view_tt" style="margin-top:30px">Lịch sử thương lượng</div>
+	<!--{foreach($refundlog_list as $v):}-->
+	<div class="ls_box">
+		<span class="fl ls_name"><!--{if($v['user_id']):}--><span class="cgreen">{$v['user_name']}</span><!--{else:}--><span class="corg">Người bán</span><!--{endif;}--></span>
+		<span class="fr ls_time">{pe_date($v['refundlog_atime'])}</span>
+		<div class="clear"></div>
+		<div class="ls_info">{$v['refundlog_text']}</div>
+	</div>
+	<!--{endforeach;}-->
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

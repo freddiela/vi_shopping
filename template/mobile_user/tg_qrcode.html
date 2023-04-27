@@ -1,0 +1,34 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="user.php"></a></div>
+	<div>{$menutitle}</div>
+</div>
+<div class="content" style="position:relative;">
+	<div class="tg_box" id="share_html">
+		<div class="tg_info">
+			<div class="tg_tx1"><img src="{$cache_setting['wap_logo']}"></div>
+			<div class="tg_name">
+				<div class="tg_jl">Tôi là {$_s_user_name}</div>
+				<div class="font12 mat5">Mời các bạn tham gia {$cache_setting['web_title']}</div>
+			</div>
+		</div>
+		<div class="tg_sm">
+			<div class="tg_ewm_box">
+				<div class="tg_ewm"><img src="{user_qrcode($pe['host_root'].'?u='.$_s_user_id)}"></div>
+				<div class="tg_text">Nhấn và giữ để xác định mã QR</div>
+			</div>
+		</div>
+		<div class="tg_bottom"><img src="{$pe['host_tpl']}images/tg_bottom.png" /></div>
+	</div>
+
+	<img src="#" id="share_img" style="position:absolute;top:0;left:10px;display:none" />
+	<div class="center mab20">Nhấn và giữ hoặc chụp ảnh màn hình để lưu ảnh và chia sẻ với bạn bè</div>
+</div>
+<script type="text/javascript" src="{$pe['host_root']}public/js/html2canvas.js?v=1"></script>
+<script type="text/javascript">
+$(function(){
+	div_toimg('share_html', 'share_img');
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

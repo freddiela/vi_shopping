@@ -1,0 +1,93 @@
+<!--{include(pe_tpl('agent_header.html'));}-->
+<div style="margin-left: 180px;">
+    <div class="hy_tt">
+        <a href="javascript:;" class="sel">{$menutitle}<span></span><i></i></a>
+    </div>
+    <div style="background-color:white ;">
+        <div class="huiyuan_content" style="width: 95%;">
+            <div class="">
+
+                <div class="mat15">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_ordertt1">
+                        <tr>
+
+                            <td>Thông tin sản phẩm</td>
+                            <td width="121">Thanh toán thực tế (Việt nam đồng)</td>
+                            <td width="101">Trang thái</td>
+                            <td width="101">Người sử dụng</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--{foreach($info_list as $v):}-->
+                <div class="hy_ordertt">
+                    <span class="fl">{pe_date($v['order_atime'])}</span>
+                    <span class="fl" style="margin-left:30px">Mã số đặt đơn hàng：{$v['order_id']}</span>
+                    <!--{if($v['pintuan_id'] && $v['order_pstate']):}-->
+                    <span class="fr mar10">Mã số tham gia nhóm：<a
+                            href="{$pe['host_root']}index.php?mod=order&act=pintuan&id={$v['pintuan_id']}"
+                            target="_blank">{$v['pintuan_id']}</a></span>
+                    <!--{endif;}-->
+                    <div class="clear"></div>
+                </div>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_orderlist">
+                    <tr>
+
+                        <td style="text-align:left;">
+                            <!--{foreach($v['product_list'] as $kk=>$vv):}-->
+                            <div class="dingdan_list" <!--{if($kk==0):}-->style="padding-top:0;border-top:0"
+                                <!--{endif;}-->>
+                                <a href="{pe_url('product-'.$vv['product_id'])}" class="fl mar5 dingdan_img"
+                                    target="_blank"><img src="{pe_thumb($vv['product_logo'], 100, 100)}" /></a>
+                                <div class="fl dingdan_name">
+                                    <!--{if($v['order_type']=='pintuan'):}--><span class="tag_pintuan">Tham gia nhóm</span>
+                                    <!--{endif;}-->
+                                    <a href="{pe_url('product-'.$vv['product_id'])}" target="_blank"
+                                        class="dd_name">{$vv['product_name']}</a>
+                                    <p class="c888 mat5">{order_skushow($vv['product_rule'])}</p>
+                                </div>
+                                <div class="fl dingdan_jg">₫{$vv['product_money']} <span
+                                        class="mat5 c888 font12">×{$vv['product_num']}</span></div>
+
+                                <div class="clear"></div>
+                            </div>
+                            <!--{endforeach;}-->
+                        </td>
+                        <td width="120">
+                            <p class="corg font14 strong">{$v['order_money']}</p>
+                            <p class="c999">（Bao gồm phí vận chuyển：{$v['order_wl_money']}）</p>
+                            <p class="c999">{$v['order_payment_name']}</p>
+                        </td>
+                        <td width="100">
+                            <!--{if($v['recovery_status'] == null):}-->
+                            {order_stateshow($v['order_state'])}
+                            <!--{elseif($v['recovery_status'] != null):}-->
+                            <p>
+                                <!--{if($v['recovery_status']==0):}-->
+                                <span class="cblue">Đang thu hồi</span>
+                                <!--{elseif($v['recovery_status']==1):}-->
+                                <span class="cred">Thu hồi thất bại</span>
+                                <!--{else:}-->
+                                <span class="cgreen">Đã được tái chế</span>
+                                <!--{endif;}-->
+                            </p>
+                            <!--{endif;}-->
+                            <!--   <p><a href="user.php?mod=order&act=view&id={$v['order_id']}" target="_blank">订单详情</a></p> -->
+                        </td>
+                        <td style="width: 101px;">{$v['user_tname']}</td>
+                    </tr>
+                </table>
+                <!--{endforeach;}-->
+                <div class="fenye mat10">{$db->page->html}</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+<div class="clear"></div>
+
+</div>
+
+</body>
+
+</html>

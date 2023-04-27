@@ -1,0 +1,3 @@
+<?php
+return unserialize('a:3:{i:5;a:6:{s:12:"userlevel_id";s:1:"5";s:14:"userlevel_name";s:12:"普通会员";s:15:"userlevel_value";s:1:"0";s:14:"userlevel_logo";s:0:"";s:13:"userlevel_zhe";s:4:"0.98";s:12:"userlevel_up";s:4:"hand";}i:6;a:6:{s:12:"userlevel_id";s:1:"6";s:14:"userlevel_name";s:12:"黄金会员";s:15:"userlevel_value";s:1:"0";s:14:"userlevel_logo";s:0:"";s:13:"userlevel_zhe";s:4:"0.95";s:12:"userlevel_up";s:4:"hand";}i:7;a:6:{s:12:"userlevel_id";s:1:"7";s:14:"userlevel_name";s:12:"至尊会员";s:15:"userlevel_value";s:1:"0";s:14:"userlevel_logo";s:0:"";s:13:"userlevel_zhe";s:4:"0.92";s:12:"userlevel_up";s:4:"hand";}}');
+?>

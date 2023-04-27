@@ -1,0 +1,160 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<style>
+	body {
+		width: 100%;
+		position: relative;
+		background: url(/template/mobile_user/images/invite_bg.png) no-repeat;
+		background-size: 100%;
+	}
+	#in-self {
+		width: 100%;
+		height: 250px;
+	}
+	#header {
+		position: relative;
+		margin: 15px;
+		background: #FFFFFF;
+		border-radius: 10px;
+	}
+	.in-title{
+		text-align: center;
+		padding: 20px;
+	}
+	.in-tip{
+		text-align: center;
+	}
+	.in-title h1{
+		font-size: 24px;
+	}
+	.in-header {
+		width: 160px;
+		height: 160px;
+		margin: 0 auto;
+	}
+	.in-header img {
+		width: 100%;
+		height: 100%;
+		display: block;
+		border: 3px solid #fff;
+	}
+	.in-button-box {
+		padding: 25px 0;
+	}
+	.in-button {
+		width: 160px;
+		height: 44px;
+		margin: 0 auto;
+	}
+	.in-button img {
+		width: 100%;
+		height: 100%;
+		display: block;
+		border: none;
+	}
+	.in-box{
+		position: relative;
+		margin: 15px;
+		background: #FFFFFF;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.in-content{
+		padding-bottom: 15px;
+		color: #333333;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		background-color: #fff;
+		line-height: 32px;
+		text-align: center;
+		border: none;
+		color: #999999;
+	}
+	.avator{
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		position: relative;
+	}
+	table img{
+		width: 100%;
+		height: 100%;
+		display: block;
+		border: none;
+		border-radius: 50%;
+	}
+</style>
+<div class="pagetop">
+	<div class="fh"><a href="user.php"></a></div>
+	<div>{$menutitle}</div>
+</div>
+<div class="in-body">
+	<div id="in-self" class="in-self"></div>
+	<header id="header">
+		<div class="in-title">
+			<h1 style="color: #333333">Mã mời của tôi</h1>
+		</div>
+		<div class="in-header">
+			<img src="{user_qrcode($pe['host_root'].'user.php?mod=do&act=register&fromto=&invite_code='.$invite_code)}" alt="">
+		</div>
+		<div class="in-tip">
+			<h1 style="color: #333333;text-align: center;font-size: 20px;">{$invite_code}</h1>
+			<p>Điền mã mời này khi bạn bè của bạn đăng ký，</p>
+			<p>Để trở thành thành viên của bạn。</p>
+		</div>
+		<div class="in-button-box">
+			<div class="in-button" id="myBtn" onclick="copyInviteCode({$invite_code});">
+				<img src="/template/mobile_user/images/invite_btn.png" alt="">
+			</div>
+		</div>
+	</header>
+	<section>
+		<div class="in-box">
+			<div class="in-title">
+				<h2 style="color: #6A11CB;">——   Nội quy hoạt động   ——</h2>
+			</div>
+			<div class="in-content">
+				<!--{foreach(array(1,2,3) as $v):}-->
+				<p class="mab10">{$v}、Mức tiêu thụ cấp của người hâm mộ {$v} của bạn, bạn sẽ nhận được {$cache_setting['tg_fc'.$v]*100}% hoa hồng </p>
+				<!--{endforeach;}-->
+			</div>
+		</div>
+		<div class="in-box">
+			<div class="in-title">
+				<h2 style="color: #6A11CB;">——   Lời mời của tôi   ——</h2>
+			</div>
+			<div class="in-content">
+				<table>
+					<thead>
+						<th>hình đại diện</th>
+						<th>tên nick</th>
+						<th>thời gian</th>
+					</thead>
+					<tbody>
+					<!--{foreach($info_list as $k=>$v):}-->
+						<tr>
+							<td class="avator"><img src="{pe_thumb($v['user_logo'], '_120', '_120', 'avatar')}"></td>
+							<td>{$v['user_name']}</td>
+							<td>{pe_date($v['user_atime'])}</td>
+						</tr>
+					<!--{endforeach;}-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">
+	function copyInviteCode(code) {
+		var input = document.createElement('input');
+		input.value = code;
+		document.body.appendChild(input);
+		input.select();
+		document.execCommand("Copy");
+		input.remove();
+		app_tip('Sao chép thành công');
+	}
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

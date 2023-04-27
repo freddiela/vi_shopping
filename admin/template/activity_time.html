@@ -1,0 +1,70 @@
+<!--{include(pe_tpl('header.html','admin'));}-->
+<div class="right">
+    <div class="now">
+        <a href="webadmin.php?mod=activity_time" class="sel">活动时间<i></i></a>
+        <a href="webadmin.php?mod=activity_time&act=add" id="fabu">添加活动时间</a>
+		<div class="clear"></div>
+    </div>
+    <div class="right_main">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+            <thead>
+                <th class="bgtt" style="border-bottom:0;">编号</th>
+                <th class="bgtt" style="border-bottom:0;">开始日期</th>
+                <th class="bgtt" style="border-bottom:0;">结束日期</th>
+                <th class="bgtt" style="border-bottom:0;">是否激活</th>
+                <th class="bgtt" style="border-bottom:0;">操作</th>
+            </thead>
+            <tbody>
+                <!--{foreach($info_list as $k=>$v):}-->
+                <tr>
+                    <td>{$v['id']}</td>
+                    <td>{$v['start']}</td>
+                    <td>{$v['end']}</td>
+                    <td>
+                        <!--{if($v['is_active']==1):}-->
+                        <span class="cgreen">是</span>
+                        <!--{else:}-->
+                        <span class="corg">否</span>
+                        <!--{endif;}-->
+                    </td>
+                    <td>
+                        <a href="webadmin.php?mod=activity_time&act=edit&id={$v['id']}" class="admin_edit mar3">修改</a>
+                        <a data-id="{$v['id']}" href="javascript:;" class="admin_del">删除</a>
+                    </td>
+                </tr>
+                <!--{endforeach;}-->
+            </tbody>
+        </table>
+        <input type="hidden" class="pe_token" name="pe_token" value="{$pe_token}" />
+    </div>
+    <div class="right_bottom">
+		<span class="fr fenye">{$db->page->html}</span>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html','admin'));}-->
+<script>
+$(function(){
+    $(document).on('click', '.admin_del', function(e) {
+        var id = $(e.currentTarget).data('id');
+        layer.confirm('确认删除此配置？', {shade: [0.6, '#000']}, function(index) {
+            layer.close(index);
+            layer.load(1, {shade: [0.6, '#000']});
+            $.ajax({
+                url: '/admin/webadmin.php?mod=activity_time&act=delete',
+                type: 'POST',
+                data: {
+                    id: id,
+                    pe_token: $('.pe_token').val()
+                },
+                success: function() {
+                    document.location.reload();
+                },
+                error: function() {
+                    document.location.reload();
+                }
+            })
+        })
+    })
+})
+</script>

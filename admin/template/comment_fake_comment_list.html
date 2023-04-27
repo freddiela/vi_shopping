@@ -1,0 +1,142 @@
+<!--{include(pe_tpl('header.html','admin'));}-->
+
+<div class="right">
+    <div class="now">
+        <a href="webadmin.php?mod=comment_fake" <!--{if($act=='index' && !$_g_star):}-->class="sel"
+            <!--{endif;}-->>评价计划<i></i>
+        </a>
+        <a href="webadmin.php?mod=comment_fake&star=comment" <!--{if($act=='index' && $_g_star=='comment'
+            ):}-->class="sel"
+            <!--{endif;}-->>评价内容<i></i>
+        </a>
+
+        <a href="webadmin.php?mod=comment_fake&act=comment_add"
+            onclick="return pe_dialog(this, '添加评价', 920, 300, 'comment_add')" id="fabu">添加评论</a>
+        <a href="webadmin.php?mod=comment_fake&act=comment_fake_plan_add" id="fabu">添加计划</a>
+        <div class="clear"></div>
+    </div>
+    <div class="right_main">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+            <thead>
+                <th class="bgtt" style="border-bottom:0;"><input class="checkall" type="checkbox"></th>
+                <th class="bgtt" style="border-bottom:0;">编号</th>
+                <th class="bgtt" style="border-bottom:0;">星级</th>
+                <th class="bgtt" style="border-bottom:0;">内容</th>
+                <th class="bgtt" style="border-bottom:0;" width="240">操作</th>
+            </thead>
+            <tbody class="list-items">
+                <!--{foreach($info_list as $k=>$v):}-->
+                <tr>
+                    <td style="background-color: rgb(255, 255, 255);">
+                        <!--{if($v['status']==0):}-->
+                        <input data-roid="{$v['cf_id']}" class="checkitem" type="checkbox">
+                        <!--{endif;}-->
+                    </td>
+                    <td data-value="{$v['cf_id']}" style="background-color: rgb(255, 255, 255);">
+                        {$v['cf_id']}</td>
+                    <td data-value="{$v['cf_comment_star']}" style="background-color: rgb(255, 255, 255);">
+                        {$v['cf_comment_star']}</td>
+                    <td data-value="{$v['cf_comment_text']}" style="background-color: rgb(255, 255, 255);">
+                        {$v['cf_comment_text']}
+                    </td>
+
+                    <td style="background-color: rgb(255, 255, 255); text-align: right;">
+                        <!--{if($v['status']==0):}-->
+                        <a class="btn tag_blue mar5" onclick="edit({$k})">编辑</a>
+                        <a class="btn tag_org" onclick="del({$v['cf_id']})">删除</a>
+                        <!--{endif;}-->
+                    </td>
+                </tr>
+                <!--{endforeach;}-->
+            </tbody>
+        </table>
+        <input type="hidden" class="pe_token" value="{$pe_token}" />
+    </div>
+    <script type="text/html" id="huishou_xiugai_html">
+        <form method="post" class="order_recovery_edit">
+            <div class="content">
+                <table>
+                    <tr>
+                        <td align="right">编号：</td>
+                        <td><input readonly="readonly"  type="text" name="info[cf_id]" value="" class="inputall input250 id" placeholder="编号" /></td>
+                    </tr>
+                    <tr>
+                        <td align="right">星级：</td>
+                        <td><input type="text" name="info[cf_comment_star]" value="" class="inputall input250 start" placeholder="星级" /></td>
+                    </tr>
+                    <tr>
+                        <td align="right">内容：</td>
+                        <td><input type="text" name="info[cf_comment_text]" value="" class="inputall input250 text" placeholder="内容" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="text-align:center">
+                <div class="quan_dh" style="margin-top:0;">
+                    <input type="hidden" name="pesubmit" />
+                    <input type="hidden" name="info[id]" class="recoveryid" />
+                    <input type="hidden" name="pe_token" value="{$pe_token}" />
+                    <input class="submit_edit tjbtn" type="button" value="提交" />
+                </div>
+            </div>
+        </form>
+    </script>
+</div>
+<script type="text/javascript">
+    function del(id) {
+        layer.confirm('确认删除？', { shadeClose: true }, function (index) {
+            layer.close(index);
+            layer.load(1, { shade: [0.6, '#000'] });
+            $.ajax({
+                url: '/admin/webadmin.php?mod=comment_fake&act=comment_del',
+                type: 'POST',
+                data: {
+                    id: id,
+                    pe_token: $('.pe_token').val()
+                },
+                dataType: 'json',
+                success: function (res) {
+                    document.location.reload();
+                },
+                error: function () {
+                    document.location.reload();
+                }
+            })
+        });
+    }
+
+    // 编辑提交
+    $(document).on('click', '.submit_edit', function () {
+        
+        layer.load(1, { shade: [0.6, '#000'] });
+        $.ajax({
+            url: '/admin/webadmin.php?mod=comment_fake&act=comment_edit',
+            type: 'post',
+            data: $('.order_recovery_edit').serialize(),
+            success: function (res) {
+                document.location.reload();
+            },
+            error: function () {
+                document.location.reload();
+            }
+        })
+        console.log();
+    })
+
+    function edit(idx) {
+        console.log($('.list-items tr').eq(idx).find('td'))
+        layer.open({
+            type: 1,
+            title: '编辑',
+            area: ['500px', '380px'],
+            fixed: false,
+            shadeClose: true,
+            shade: 0.5,
+            content: $("#huishou_xiugai_html").html()
+        })
+        $('.id').val($('.list-items tr').eq(idx).find('td').eq(1).data('value'));
+        $('.start').val($('.list-items tr').eq(idx).find('td').eq(2).data('value'));
+        $('.text').val($('.list-items tr').eq(idx).find('td').eq(3).data('value'));
+    }
+</script>
+
+<!--{include(pe_tpl('footer.html','admin'));}-->

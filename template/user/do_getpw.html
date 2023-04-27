@@ -1,0 +1,67 @@
+<!--{include(pe_tpl('do_header.html'));}-->
+<div class="login_bg">
+	<div style="width:1000px; margin:0 auto; position:relative">
+	<div class="login_r" style="width:300px; height:400px; top:-50px;  position:absolute; right:0;">
+		<div class="zctt">{$menutitle}</div>
+		<form method="post" id="form">
+		<div class="zc_input1 mat10">
+			Đăng nhập tài khoản：<input type="text" name="user_name" class="login_input1" placeholder="Số điện thoại di động / email" />
+		</div>
+		<div class="zc_input1 mat10" style="position:relative">
+			Mã&nbsp;&nbsp; xác minh ：<input type="text" name="yzm" class="login_input1" placeholder="Điện thoại di động / mã xác minh email" style="width:100px;" />
+			<div class="user_yzm" href="{$pe['host_root']}index.php?mod=check&act=send_yzm&type=getpw" onclick="pe_sendyzm(this, 'user_name')">Lấy mã xác minh</div>
+		</div>
+		<div class="zc_input1 mat10">
+			Đặt mật khẩu mới：<input type="text" name="user_pw" class="login_input1" placeholder="Đặt mật khẩu mới từ 6-20 chữ số" onfocus="this.type='password'" style="width:190px;" />
+		</div>
+		<div class="zc_input1 mat10">
+			Xác nhận mật khẩu mới：<input type="text" name="user_pw1" class="login_input1" placeholder="Vui lòng điền lại mật khẩu mới của bạn" onfocus="this.type='password'" style="width:190px;" />
+		</div>
+		<div class="mat20">
+			<input type="hidden" name="pesubmit" />
+			<input type="button" class="loginbtn1" value="提 交" />
+		</div>
+		</form>
+		<div class="login_other mat20">
+			<a href="{$pe['host_root']}user.php?mod=do&act=register" class="mar10">Đăng ký miễn phí</a> |
+			<a href="{$pe['host_root']}user.php?mod=do&act=login" class="mal10">Người sử dùng đăng nhập</a>
+		</div>
+	</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		if ($(":input[name='user_name']").val() == '') {
+			pe_tip('Vui lòng điền tài khoản đăng nhập');
+			return false;
+		}
+		if ($(":input[name='yzm']").val() == '') {
+			pe_tip('Vui lòng điền mã xác minh');
+			return false;
+		}
+		if ($(":input[name='user_pw']").val() == '') {
+			pe_tip('Vui lòng điền mật khẩu mới');
+			return false;
+		}
+		if ($(":input[name='user_pw1']").val() == '') {
+			pe_tip('Vui lòng điền xác nhận mật khẩu ');
+			return false;
+		}
+		if ($(":input[name='user_pw']").val() != $(":input[name='user_pw1']").val()) {
+			pe_tip('Mật khẩu mới và mật khẩu xác nhận không trung khớp');
+			return false;
+		}
+		$(this).val('Đáng gửi...');
+		pe_submit('user.php?mod=do&act=getpw', function(json){
+			if (json.result) {
+				pe_open('user.php', 1000);
+			}
+			else {
+	    		$(":button").val('Gửi đi');			
+			}
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('do_footer.html'));}-->

@@ -1,0 +1,38 @@
+<!--{include(pe_tpl('header.html'));}-->
+<div class="huiyuan_content">
+	<!--{include(pe_tpl('user_menu.html'));}-->
+	<div class="fr huiyuan_main">
+		<div class="hy_tt">
+			<a href="javascript:;" class="sel">{$menutitle}<span>({$tongji['all']})</span><i></i></a>
+			<a href="user.php?mod=useraddr&act=add" class="fabu_btn">Thêm địa chỉ mới</a>
+			<div class="clear"></div>
+		</div>
+		<div class="hy_tablelist">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th width="100">Người nhận hàng</th>
+				<th width="120">Số điện thoại</th>
+				<th>Địa chỉ nhận hàng</th>
+				<th width="130">Thao tác</td>
+			</tr>
+			<!--{foreach($info_list as $v):}-->
+			<tr>
+				<td>{$v['user_tname']}</td>
+				<td>{userbank_num($v['user_phone'])}</td>
+				<td class="aleft">
+					<!--{if($v['address_default']):}--><span class="cred">[Mặc định]</span><!--{endif;}-->
+					{$v['address_province']} {$v['address_city']} {$v['address_area']} {$v['address_text']}
+				</td>
+				<td>
+					<a href="user.php?mod=useraddr&act=edit&id={$v['address_id']}" class="tag_gray mar5">Sửa đổi</a>
+					<a href="javascript:pe_confirm('Xóa địa chỉ này', 'user.php?mod=useraddr&act=del&id={$v['address_id']}&token={$pe_token}')" class="tag_gray">Xóa bỏ</a>				
+				</td>
+			</tr>
+			<!--{endforeach;}-->
+			</table>
+		</div>
+		<div class="fenye mat10">{$db->page->html}</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

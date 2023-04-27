@@ -1,0 +1,36 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="user.php?mod=order_recovery"></a></div>
+	<div>{$menutitle}</div>
+	<div class="cd"><a href="javascript:top_menu();"></a></div>
+	<!--{include(pe_tpl('top_menu.html'));}-->
+</div>
+<div class="main">
+    <div class="banner order-recovery">
+        <div class="banner-inner">
+            <span>Thu hồi ghi nhớ</span>
+            <div class="icon jinbi"></div>
+        </div>
+    </div>
+    <!--{foreach($recovery_list as $k=>$v):}-->
+    <div class="order-recovery-item">
+        <div>
+            <div>Mã số đơn đặt hàng: {$v['order_id']}</div>
+            <div class="amount">Thu hồi giá: {$v['amount']}</div>
+            <!--{if($v['status'] == 1):}-->
+            <div class="amount">Lý do thất bại：{$v['reason']}</div>
+            <!--{endif;}-->
+        </div>
+        <!--{if($v['status'] == 0):}-->
+        <div class="cblue">Đang chờ xem xét</div>
+        <!--{elseif($v['status'] == 2):}-->
+        <div class="cgreen">Thành công thu hồi</div>
+        <!--{else:}-->
+        <div class="cred1">Thu hồi thất bại</div>
+        <!--{endif;}-->
+    </div>
+    <!--{endforeach;}-->
+    <div class="fenye mab10">{$db->page->html}</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->

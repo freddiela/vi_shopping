@@ -1,0 +1,50 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="javascript:history.go(-1)"></a></div>
+	<div>{$menutitle}</div>
+	<div class="cd"><a href="javascript:top_menu();"></a></div>
+	<!--{include(pe_tpl('top_menu.html'));}-->
+</div>
+<div class="content">
+	<div class="loginbox">
+		<form method="post" id="form">
+		<div class="tip_pwd mat10">mật khẩu mới：</div>
+		<div class="input_box"><input type="text" name="user_pw" class="login_input1" placeholder="Vui lòng điền mật khẩu mới của bạn" /></div>
+		<div class="tip_pwd mat10">Xác nhận mật khẩu：</div>
+		<div class="input_box"><input type="text" name="user_pw1" class="login_input1" placeholder="Vui lòng điền lại mật khẩu mới của bạn" /></div>
+		<div class="loginbtn">
+			<input type="hidden" name="pesubmit" />
+			<input type="button" value="Gửi" />
+		</div>
+		</form>
+		<div class="zh_zc1">
+			<a href="{$pe['host_root']}user.php?mod=do&act=register" class="mar10">Đăng kí miễn phí</a> |
+			<a href="{$pe['host_root']}user.php?mod=do&act=login" class="mal10">Người sử dùng đăng nhập</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(":button").click(function(){
+		if ($(":input[name='user_pw']").val() == '') {
+			app_tip('Vui lòng điền mật khẩu mới');
+			return false;
+		}
+		if ($(":input[name='user_pw1']").val() == '') {
+			app_tip('Vui lòng điền xác nhận mật khẩu');
+			return false;
+		}
+		if ($(":input[name='user_pw']").val() != $(":input[name='user_pw1']").val()) {
+			app_tip('Mật khẩu mới và mật khẩu xác nhận không trung khớp');
+			return false;
+		}
+		app_submit('user.php?mod=do&act=setpw&token={$_g_token}', function(json){
+			if (json.result) {
+				app_open('user.php?mod=do&act=login', 1000);	
+			}
+		})
+	})
+})
+</script>
+<!--{include(pe_tpl('footer.html'));}-->

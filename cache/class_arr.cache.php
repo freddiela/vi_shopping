@@ -1,0 +1,4 @@
+<?php
+return unserialize('a:2:{s:4:"news";a:2:{i:1;a:4:{s:8:"class_id";s:1:"1";s:10:"class_name";s:13:"Thông báo
+";s:10:"class_type";s:4:"news";s:11:"class_order";s:1:"0";}i:2;a:4:{s:8:"class_id";s:1:"2";s:10:"class_name";s:9:"Tin tức";s:10:"class_type";s:4:"news";s:11:"class_order";s:1:"1";}}s:4:"help";a:5:{i:4;a:4:{s:8:"class_id";s:1:"4";s:10:"class_name";s:26:"Hướng dẫn sử dụng";s:10:"class_type";s:4:"help";s:11:"class_order";s:1:"1";}i:5;a:4:{s:8:"class_id";s:1:"5";s:10:"class_name";s:25:"Đơn vị vận chuyển";s:10:"class_type";s:4:"help";s:11:"class_order";s:1:"2";}i:12;a:4:{s:8:"class_id";s:2:"12";s:10:"class_name";s:27:"Phương thức thanh toán";s:10:"class_type";s:4:"help";s:11:"class_order";s:1:"3";}i:6;a:4:{s:8:"class_id";s:1:"6";s:10:"class_name";s:22:"Dịch vụ buôn bán";s:10:"class_type";s:4:"help";s:11:"class_order";s:1:"4";}i:7;a:4:{s:8:"class_id";s:1:"7";s:10:"class_name";s:16:"Về chúng tôi";s:10:"class_type";s:4:"help";s:11:"class_order";s:1:"5";}}}');
+?>

@@ -1,0 +1,66 @@
+
+<!--{include(pe_tpl('header.html'));}-->
+<div class="pagetop">
+	<div class="fh"><a href="user.php"></a></div>
+	<div>Trung tâm mời gọi</div>
+	<div class="fx_gz"><a href="javascript:app_page('page_tgdesc')">luật lệ</a></div>
+</div>
+<div class="fh_top">
+	<div class="fenhong_box">
+		<div class="">Thu nhập của tôi</div>
+		<div class="fh_money">{$tongji['all']}</div>
+		<div class="fh_tx"><a href="user.php?mod=tg&act=invite">Mời bạn bè</a></div>
+		<div class="sy_num">
+			<ul>
+			<li>Đã thêm hôm nay<div class="sy_money">{$tongji['day']}</div><i></i></li>
+			<li>Đã thêm vào tháng này<div class="sy_money">{$tongji['mon']}</div></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="lb_sx">
+		<a href="user.php?mod=tg&act=user" <!--{if($act=='user'):}-->class="sel"<!--{endif;}-->>người hâm mộ của tôi</a>
+		<a href="user.php?mod=tg&act=list" <!--{if($act=='list'):}-->class="sel"<!--{endif;}-->>Thu nhập của tôi</a>
+		<div class="lb_xian"></div>
+		<div class="clear"></div>
+	</div>
+	<!--{if(!count($info_list)):}-->
+	<div class="nodata">
+		<div class="nodata_img"></div>
+		<div class="nodata_tip">Không có người hâm mộ</div>
+	</div>
+	<!--{endif;}-->
+	<div class="mat10">
+		<!--{foreach($info_list as $k=>$v):}-->
+		<div class="tg_box" style="margin:0 0 10px 0">
+			<div class="tg_tx"><img src="{pe_thumb($v['user_logo'], '_120', '_120', 'avatar')}"></div>
+			<div class="tg_dj">
+				<div class="tg_dj_left">
+					<span>{$v['user_name']}</span>
+					<span class="dj_btn1 mal10">{$ini['tg_level'][$v['tguser_level']]} lớp quạt</span>
+				</div>
+				<div class="tg_btn_right"><span class="tg_btn">Mời gọi {intval($v['num'])} người </span></div>
+				<div class="clear"></div>
+				<div class="mat5 c888 font12">
+					<span class=""> Mức tiêu thụ tổng：{$v['money_cost']['0']['user_money_cost']}</span>
+					<span class="mal10">{pe_date_color(pe_date($v['user_atime'], 'Y-m-d'))}</span>
+				</div>
+			</div>
+		</div>
+		<!--{endforeach;}-->
+	</div>
+	<div class="fenye mab10">{$db->page->html}</div>
+</div>
+<div id="page_tgdesc" class="divhide">
+	<div class="add_tt">Quy tắc thu nhập</div>
+	<div class="close_btn" onclick="app_page_close();"></div>
+	<div style="padding:30px 20px">
+		<!--{foreach(array(1,2,3) as $v):}-->
+		<p class="mab10">Nếu người hâm mộ {$v} của bạn chi 100 nhân dân tệ, bạn sẽ nhận được {$cache_setting ['tg_fc'. $V] * 100} nhân dân tệ;
+			</p>
+		<!--{endforeach;}-->
+	</div>
+</div>
+<!--{include(pe_tpl('footer.html'));}-->
