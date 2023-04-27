@@ -91,7 +91,7 @@ function product_money($money) {
 		$money = $zhe ? pe_num($money * $zhe, 'round', 1) : $money;	
 	}
 	// return $money;
-	return number_format($money,0,",",".")
+	return number_format($money,0,",",".");
 }
 
 //计算商品活动价
