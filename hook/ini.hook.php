@@ -8,7 +8,7 @@ $ini['huodong_tag'] = array('团购', '特价', '店庆', '限时折扣', '新�
 $ini['quan_type'] = array('online'=>'点击领取', 'offline'=>'券码兑换');
 $ini['quanlog_state'] = array(0=>'未使用', 1=>'已使用', 2=>'已过期');
 $ini['notice_tpl'] = array('order_id'=>'订单号', 'order_money'=>'付款金额', 'order_wl_name'=>'快递公司', 'order_wl_id'=>'快递单号', 'order_closetext'=>'订单关闭原因', 'user_name'=>'用户名', 'user_tname'=>'收件人', 'user_phone'=>'联系电话', 'user_address'=>'收货地址');
-$ini['class_type'] = array('news'=>'资讯中心', 'help'=>'帮助中心');
+$ini['class_type'] = array('news'=>'Trung Tâm Tư Vấn', 'help'=>'帮助中心');
 $ini['tg_level'] = array('1'=>'一', 2=>'二', 3=>'三');
 $ini['userlevel_up'] = array('auto'=>'自动升级', 'hand'=>'手动升级');
 $ini['order_state'] = array('wpay'=>'等待付款', 'wtuan'=>'待成团', 'wsend'=>'等待发货',  'wget'=>'已发货', 'success'=>'交易完成', 'close'=>'交易关闭','apply_close'=>'取消待审');
